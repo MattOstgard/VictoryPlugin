@@ -4646,6 +4646,7 @@ bool UVictoryBPFunctionLibrary::Victory_GetPixelFromT2D(UTexture2D* T2D, int32 X
 	RawImageData->Unlock();
 	return true;
 }
+
 bool UVictoryBPFunctionLibrary::Victory_GetPixelsArrayFromT2D(UTexture2D* T2D, int32& TextureWidth, int32& TextureHeight,TArray<FLinearColor>& PixelArray)
 {
 	if(!T2D) 
@@ -4684,6 +4685,19 @@ bool UVictoryBPFunctionLibrary::Victory_GetPixelsArrayFromT2D(UTexture2D* T2D, i
 	}
 	  
 	RawImageData->Unlock();
+	return true;
+}
+
+bool UVictoryBPFunctionLibrary::Victory_GetPixelsArrayFromRenderTarget2D(UTextureRenderTarget2D* RenderTarget2D, int32& TextureWidth, int32& TextureHeight, TArray<FLinearColor>& PixelArray)
+{
+	if (!RenderTarget2D)
+	{
+		return false;
+	}
+
+	FRenderTarget* RenderTarget = RenderTarget2D->GetRenderTargetResource();
+	RenderTarget->ReadLinearColorPixels(PixelArray);
+
 	return true;
 }
 
